@@ -1,5 +1,9 @@
 default_language_version:
   python: python3.10
+
+# Disable checks of third-party code
+exclude: third_party/
+
 repos:
   - repo: local
     hooks:
