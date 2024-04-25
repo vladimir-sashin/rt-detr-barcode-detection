@@ -2,7 +2,10 @@
 """
 
 import os 
-import sys 
+import sys
+from pathlib import Path
+from typing import Optional
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 import argparse
 
@@ -11,7 +14,7 @@ from src.core import YAMLConfig
 from src.solver import TASKS
 
 
-def main(args, ) -> None:
+def main(args, ) -> Optional[Path]:
     '''main
     '''
     dist.init_distributed()
@@ -31,7 +34,7 @@ def main(args, ) -> None:
     if args.test_only:
         solver.val()
     else:
-        solver.fit()
+        return solver.fit()
 
 
 if __name__ == '__main__':

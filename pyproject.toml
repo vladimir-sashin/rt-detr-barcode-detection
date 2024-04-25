@@ -7,6 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+clearml = "^1.15.1"
 
 
 [tool.poetry.group.CI.dependencies]
@@ -21,6 +22,7 @@ onnx = "1.14.0"
 pycocotools = "^2.0.7"
 pyyaml = "^6.0.1"
 scipy = "^1.13.0"
+tensorboard = "^2.16.2"
 
 
 [tool.poetry.group.data.dependencies]

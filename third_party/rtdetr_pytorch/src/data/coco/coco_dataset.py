@@ -4,7 +4,7 @@
 COCO dataset which returns image_id for evaluation.
 Mostly copy-paste from https://github.com/pytorch/vision/blob/13b35ff/references/detection/coco_utils.py
 """
-
+import PIL
 import torch
 import torch.utils.data
 
@@ -18,6 +18,7 @@ from pycocotools import mask as coco_mask
 from src.core import register
 
 __all__ = ['CocoDetection']
+PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
 @register

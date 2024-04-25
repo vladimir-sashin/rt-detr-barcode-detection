@@ -3,7 +3,6 @@
 https://github.com/facebookresearch/detr/blob/main/util/misc.py
 Mostly copy-paste from torchvision references.
 """
-
 import time
 import pickle
 import datetime
@@ -236,4 +235,3 @@ class MetricLogger(object):
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
         print('{} Total time: {} ({:.4f} s / it)'.format(
             header, total_time_str, total_time / len(iterable)))
-
