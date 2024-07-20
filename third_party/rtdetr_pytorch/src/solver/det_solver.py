@@ -8,12 +8,10 @@ import datetime
 import torch
 
 from src.misc import dist
-from src.misc.tb_logger import TBWriter
 from src.data import get_coco_api_from_dataset
 
 from .solver import BaseSolver
 from .det_engine import train_one_epoch, evaluate
-from ..core import BaseConfig
 
 
 class DetSolver(BaseSolver):

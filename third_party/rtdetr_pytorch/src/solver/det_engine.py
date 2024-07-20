@@ -6,16 +6,12 @@ by lyuwenyu
 """
 
 import math
-import os
 import sys
-import pathlib
 from typing import Iterable, Optional
 
 import torch
 import torch.amp
-import torchvision
 
-from misc import show_sample
 from src.data import CocoEvaluator
 from src.misc import (MetricLogger, SmoothedValue, reduce_dict)
 from src.misc.tb_logger import TBWriter

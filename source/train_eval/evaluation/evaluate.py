@@ -1,8 +1,6 @@
 from argparse import Namespace
 from pathlib import Path
 
-from tools.train import main as rtdetr_main
-
 from source.train_eval.config.train_eval_cfg import TrainEvalConfig
 from source.train_eval.evaluation.inference import export_preds, run_inference
 from source.train_eval.evaluation.metrics_calculation import (
@@ -20,6 +18,7 @@ from source.train_eval.rtdetr_configurator import (
     generate_rtdetr_configs,
     get_arch_cfg_path,
 )
+from third_party.rtdetr_pytorch.tools.train import main as rtdetr_main
 
 
 def evaluate_f1_conf_on_val(onnx_model: Path, cfg: TrainEvalConfig) -> CompleteEvalResults:
