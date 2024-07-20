@@ -17,7 +17,7 @@ det_model_cfg:
     use_plus_obj365 : True
 
 training_cfg:
-  epochs: 1
+  epochs: 20
   resume_checkpoint: null
   seed: 42
   ema:

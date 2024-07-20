@@ -53,3 +53,9 @@ run_data_pipe:
 # ================== TRAINING AND EVALUATION ==================
 run_train_eval:
 	poetry run python -m source.train_eval.main
+
+
+# ======== E2E DATA + TRAINING AND EVALUATION PIPELINE =======
+run_e2e_pipeline:
+	$(MAKE) run_data_pipe
+	$(MAKE) run_train_eval
