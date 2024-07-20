@@ -15,6 +15,10 @@ repos:
       language: python
       types: [ python ]
       additional_dependencies: [ wemake-python-styleguide>=0.19.2 ]
+  - repo: https://github.com/jendrikseipp/vulture
+    rev: v2.7
+    hooks:
+      - id: vulture
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -24,6 +28,7 @@ repos:
       - id: check-yaml
         args:
           - '--unsafe'
+        exclude: source/cfg_templates
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: double-quote-string-fixer
@@ -36,11 +41,12 @@ repos:
     hooks:
       - id: black
         args: ["--skip-string-normalization", "--line-length=120"]
+        exclude: source/train_eval/constants.py
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.5.1
     hooks:
       - id: mypy
-        additional_dependencies: ["types-PyYAML"]
+        additional_dependencies: ["types-PyYAML", "types-requests"]
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.5.1
     hooks:

@@ -1,0 +1,90 @@
+data_source_cfg:
+  storage: clearml  # or local
+  dataset_name: barcodes
+  clearml_storage_cfg:  # Ignored if storage==local, optional for storage==clearml
+    project_name: Barcodes detection
+    dataset_version: null
+
+clearml_cfg:
+  project_name: Barcode detection
+  experiment_name: RTDETR training
+  track_in_clearml: true
+
+det_model_cfg:
+  architecture: rtdetr_r18vd
+  pretrain:
+    load_pretrain: True
+    use_plus_obj365 : True
+
+training_cfg:
+  epochs: 1
+  resume_checkpoint: null
+  seed: 42
+  ema:
+    use_ema: True
+    kwargs:
+      decay: 0.9999
+      warmups: 2000
+  clip_max_norm: 0.1
+  find_unused_parameters: True
+  optimizer:
+    target_class: AdamW # See available at source/constants.py:RtdetrOptims
+    kwargs:
+      lr: 0.0001
+      betas: [ 0.9, 0.999 ]
+      weight_decay: 0.0001
+  lr_scheduler:
+    target_class: MultiStepLR
+    kwargs:
+      milestones: [ 1000 ]
+      gamma: 0.1
+
+data_cfg:
+  num_classes: 1
+  idx_to_class:
+    0: barcode
+  train_data:
+    transforms:
+      # See all available transforms at third_party/rtdetr_pytorch/src/data/transforms.py
+      - { type: RandomPhotometricDistort, p: 0.5 }
+      - { type: RandomZoomOut, fill: 0 }
+      - { type: RandomIoUCrop, p: 0.8 }
+      - { type: SanitizeBoundingBox, min_size: 1 }
+      - { type: RandomHorizontalFlip }
+      - { type: Resize, size: [ 640, 640 ], }
+      - { type: ToImageTensor }
+      - { type: ConvertDtype }
+      - { type: SanitizeBoundingBox, min_size: 1 }
+      - { type: ConvertBox, out_fmt: 'cxcywh', normalize: True }
+    shuffle: True
+    batch_size: 4
+    num_workers: 4
+    drop_last: False
+
+  val_data:
+    transforms:
+      - { type: Resize, size: [ 640, 640 ] }
+      - { type: ToImageTensor }
+      - { type: ConvertDtype }
+    shuffle: False
+    batch_size: 8
+    num_workers: 4
+    drop_last: False
+
+  test_data:
+    transforms:
+      - { type: Resize, size: [ 640, 640 ] }
+      - { type: ToImageTensor }
+      - { type: ConvertDtype }
+    shuffle: False
+    batch_size: 8
+    num_workers: 4
+    drop_last: False
+
+runtime_cfg:
+  sync_bn: False
+  find_unused_parameters: False
+  use_amp: False
+  scaler:
+    enabled: False
+    type: GradScaler

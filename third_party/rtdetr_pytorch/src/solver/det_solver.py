@@ -8,7 +8,7 @@ import datetime
 import torch
 
 from src.misc import dist
-from misc.tb_logger import TBWriter
+from src.misc.tb_logger import TBWriter
 from src.data import get_coco_api_from_dataset
 
 from .solver import BaseSolver
@@ -17,10 +17,6 @@ from ..core import BaseConfig
 
 
 class DetSolver(BaseSolver):
-    def __init__(self, cfg: BaseConfig):
-        super().__init__(cfg)
-
-        self.tb_writer = TBWriter()
 
     @property
     def best_checkpoint_path(self):
@@ -75,6 +71,7 @@ class DetSolver(BaseSolver):
                 else:
                     best_stat['epoch'] = epoch
                     best_stat[k] = test_stats[k][0]
+                    dist.save_on_master(self.state_dict(epoch), self.best_checkpoint_path)
             self.tb_writer.add_scalar('best_epoch/map@50-95', best_stat['coco_eval_bbox'], epoch)
             self.tb_writer.add_scalar('best_epoch/epoch', best_stat['epoch'], epoch)
             print('best_stat: ', best_stat)
@@ -98,7 +95,7 @@ class DetSolver(BaseSolver):
                             filenames.append(f'{epoch:03}.pth')
                         for name in filenames:
                             torch.save(coco_evaluator.coco_eval["bbox"].eval,
-                                    self.output_dir / "eval" / name)
+                                    self.output_dir / "eval_logs" / name)
 
         total_time = time.time() - start_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
@@ -115,7 +112,7 @@ class DetSolver(BaseSolver):
 
         module = self.ema.module if self.ema else self.model
         test_stats, coco_evaluator = evaluate(module, self.criterion, self.postprocessor,
-                self.val_dataloader, base_ds, self.device, self.output_dir)
+                self.val_dataloader, base_ds, self.device, self.output_dir, tb_writer=self.tb_writer, mode='test')
 
         if self.output_dir:
             dist.save_on_master(coco_evaluator.coco_eval["bbox"].eval, self.output_dir / "eval.pth")

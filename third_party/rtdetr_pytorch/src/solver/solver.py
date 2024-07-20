@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path 
 from typing import Dict
 
+from misc.tb_logger import TBWriter
 from src.misc import dist
 from src.core import BaseConfig
 
@@ -39,6 +40,10 @@ class BaseSolver(object):
 
         self.output_dir = Path(cfg.output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        train_bbox_fmt = self.cfg.yaml_cfg['train_dataloader']['dataset']['transforms']['ops'][-1]['out_fmt']
+        # val_bbox_fmt = self.cfg.yaml_cfg['val_dataloader']['dataset']['transforms']['ops'][-1]['out_fmt']
+        self.tb_writer = TBWriter(str(self.output_dir), train_bbox_fmt)
 
 
     def train(self, ):

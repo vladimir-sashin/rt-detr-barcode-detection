@@ -15,7 +15,7 @@ Training of RT DETR pytorch model for barcode detection.
    ```
    - Windows:
    ```bash
-   make setup_ws <path_to_your_python_3.10_executable>
+   make setup_ws PYTHON_EXEC=<path_to_your_python_3.10_executable>
    ```
 1. Activate poetry virtual environment
    ```bash

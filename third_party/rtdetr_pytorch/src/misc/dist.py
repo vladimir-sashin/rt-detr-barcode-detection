@@ -42,7 +42,7 @@ def init_distributed():
         setup_print(rank == 0)
         print('Initialized distributed mode...')
 
-        return True 
+        return True
 
     except:
         print('Not init distributed mode.')
@@ -179,11 +179,11 @@ def sync_time():
     return time.time()
 
 
-
 def set_seed(seed):
     # fix the seed for reproducibility
     seed = seed + get_rank()
     torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
     random.seed(seed)
 

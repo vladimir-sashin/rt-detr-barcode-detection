@@ -21,7 +21,7 @@ RTDETRTransformer:
 
 
 optimizer:
-  type: AdamW
+  # Overrides params from `include/optimizer.yaml`
   params: 
     - 
       params: 'backbone'

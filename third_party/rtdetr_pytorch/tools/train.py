@@ -18,9 +18,10 @@ def main(args, ) -> Optional[Path]:
     '''main
     '''
     dist.init_distributed()
+    dist.set_seed(args.seed)
 
     assert not all([args.tuning, args.resume]), \
-        'Only support from_scrach or resume or tuning at one time'
+        'Only support resume or tuning at one time'
 
     cfg = YAMLConfig(
         args.config,
@@ -43,6 +44,7 @@ if __name__ == '__main__':
     parser.add_argument('--config', '-c', type=str, )
     parser.add_argument('--resume', '-r', type=str, )
     parser.add_argument('--tuning', '-t', type=str, )
+    parser.add_argument('--seed', '-s', type=int, )
     parser.add_argument('--test-only', action='store_true', default=False,)
     parser.add_argument('--amp', action='store_true', default=False,)
 

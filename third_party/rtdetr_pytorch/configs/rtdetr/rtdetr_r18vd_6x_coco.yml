@@ -1,4 +1,3 @@
-
 __include__: [
   '../dataset/coco_detection.yml',
   '../runtime.yml',
@@ -7,8 +6,7 @@ __include__: [
   './include/rtdetr_r50vd.yml',
 ]
 
-
-output_dir: ./output/rtdetr_r18vd_6x_coco
+output_dir: C:\Users\sashi\PycharmProjects\rt-detr-barcode-detection\experiments\Barcode Detection\Debug experiment 04\run_04-07-24_12-30-40
 
 PResNet:
   depth: 18
@@ -21,29 +19,23 @@ HybridEncoder:
   hidden_dim: 256
   expansion: 0.5
 
-
 RTDETRTransformer:
   eval_idx: -1
   num_decoder_layers: 3
   num_denoising: 100
 
-
-
 optimizer:
-  type: AdamW
+  # Overrides params from `include/optimizer.yaml`
   params: 
-    - 
+    -
+      # disable weight decay for backbone norm and set specific lr
       params: '^(?=.*backbone)(?=.*norm).*$'
       lr: 0.00001
       weight_decay: 0.
     - 
+      # set specific lr for backbone (not norm layers)
       params: '^(?=.*backbone)(?!.*norm).*$'
       lr: 0.00001
     - 
       params: '^(?=.*(?:encoder|decoder))(?=.*(?:norm|bias)).*$'
       weight_decay: 0.
-
-  lr: 0.0001
-  betas: [0.9, 0.999]
-  weight_decay: 0.0001
-

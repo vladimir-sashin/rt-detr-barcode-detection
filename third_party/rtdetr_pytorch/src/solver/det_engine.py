@@ -13,10 +13,12 @@ from typing import Iterable, Optional
 
 import torch
 import torch.amp
+import torchvision
 
+from misc import show_sample
 from src.data import CocoEvaluator
 from src.misc import (MetricLogger, SmoothedValue, reduce_dict)
-from misc.tb_logger import TBWriter
+from src.misc.tb_logger import TBWriter
 
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
@@ -34,7 +36,11 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     ema = kwargs.get('ema', None)
     scaler = kwargs.get('scaler', None)
 
+    first_batch = True
     for samples, targets in metric_logger.log_every(data_loader, print_freq, header):
+        if first_batch:
+            tb_writer.log_batch(samples, targets, epoch, mode='train')
+            first_batch = False
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
@@ -115,7 +121,11 @@ def evaluate(model: torch.nn.Module, criterion: torch.nn.Module, postprocessors,
     #         output_dir=os.path.join(output_dir, "panoptic_eval"),
     #     )
 
+    first_batch = True
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
+        if first_batch:
+            tb_writer.log_batch(samples, targets, epoch, mode=mode)
+            first_batch = False
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
