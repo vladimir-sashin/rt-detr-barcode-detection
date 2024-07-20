@@ -1,0 +1,17 @@
+.pytest_cache
+.mypy_cache
+.ipynb_checkpoints
+.virtual_documents
+
+# DS_Store (MacOS)
+.DS_Store
+
+__pycache__
+.idea
+.lsp_symlink
+.gdrive_dataset
+lightning_logs
+*.pth
+datasets
+data_tmp
+experiments

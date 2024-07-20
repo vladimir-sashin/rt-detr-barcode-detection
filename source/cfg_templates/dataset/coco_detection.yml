@@ -1,0 +1,24 @@
+task: detection
+
+num_classes: {{ data_cfg.num_classes }}
+remap_mscoco_category: False
+
+train_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: {{ data_paths.train.img_folder }}
+    ann_file: {{ data_paths.train.ann_file }}
+    transforms:
+      type: Compose
+      ops: ~
+
+val_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: {{ data_paths.valid.img_folder }}
+    ann_file: {{ data_paths.valid.ann_file }}
+    transforms:
+      type: Compose
+      ops: ~

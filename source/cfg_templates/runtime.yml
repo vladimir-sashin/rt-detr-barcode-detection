@@ -1,0 +1,6 @@
+sync_bn: {{ runtime_cfg.sync_bn }}
+find_unused_parameters: {{ runtime_cfg.find_unused_parameters }}
+use_amp: {{ runtime_cfg.use_amp }}
+scaler:
+  type: {{ runtime_cfg.scaler.type }}
+  enabled: {{ runtime_cfg.scaler.enabled }}

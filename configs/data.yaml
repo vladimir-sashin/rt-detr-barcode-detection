@@ -1,0 +1,17 @@
+dataset_name: barcodes
+url: https://drive.google.com/u/0/uc?id=1g4Z-j9k3fuKGYFd-leOBpYN-qkmPrVRW
+
+split_cfg:
+  seed: 42
+  split_ratios:
+    train: 0.7
+    valid: 0.15
+    test: 0.15
+
+storage: clearml  # clearml or local
+# If storage == clearml:
+clearml_cfg:
+  project_name: Barcodes detection
+  # Whether to keep output datasets locally in datasets/temporary dir.
+  # NB! Datasets from datasets/temporary dir will NOT be used in training.
+  keep_local_copy: false
