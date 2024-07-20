@@ -1,0 +1,24 @@
+task: detection
+
+num_classes: 1
+remap_mscoco_category: False
+
+train_dataloader: 
+  type: DataLoader
+  dataset: 
+    type: CocoDetection
+    img_folder: C:\Users\sashi\PycharmProjects\rt-detr-barcode-detection\source\train\dataset\barcodes\val\data
+    ann_file: C:\Users\sashi\PycharmProjects\rt-detr-barcode-detection\source\train\dataset\barcodes\val\labels.json
+    transforms:
+      type: Compose
+      ops: ~
+
+val_dataloader:
+  type: DataLoader
+  dataset: 
+    type: CocoDetection
+    img_folder: C:\Users\sashi\PycharmProjects\rt-detr-barcode-detection\source\train\dataset\barcodes\test\data
+    ann_file: C:\Users\sashi\PycharmProjects\rt-detr-barcode-detection\source\train\dataset\barcodes\test\labels.json
+    transforms:
+      type: Compose
+      ops: ~ 

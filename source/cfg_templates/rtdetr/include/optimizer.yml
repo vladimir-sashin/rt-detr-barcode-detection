@@ -1,0 +1,32 @@
+use_ema: {{ training_cfg.ema.use_ema }}
+ema:
+  type: ModelEMA
+  {% for key, value in training_cfg.ema.kwargs.items() -%}
+  {{ key }}: {{ value }}
+  {% endfor %}
+find_unused_parameters: {{ training_cfg.find_unused_parameters }}
+epoches: {{ training_cfg.epochs }}
+clip_max_norm: {{ training_cfg.clip_max_norm }}
+optimizer:
+  type: {{ training_cfg.optimizer.target_class }}
+  params: # TBD. allow pass regex? keep it as default in case params are not passed?
+    -
+      # set specific lr for backbone
+      params: 'backbone'
+      lr: 0.00001
+    -
+      # disable weight decay for encoder bias norm layers
+      params: '^(?=.*encoder(?=.*bias|.*norm.*weight)).*$'
+      weight_decay: 0.
+    -
+      # disable weight decay for decoder bias norm layers
+      params: '^(?=.*decoder(?=.*bias|.*norm.*weight)).*$'
+      weight_decay: 0.
+  {% for key, value in training_cfg.optimizer.kwargs.items() -%}
+  {{ key }}: {{ value }}
+  {% endfor %}
+lr_scheduler:
+  type: {{ training_cfg.lr_scheduler.target_class }}
+  {% for key, value in training_cfg.lr_scheduler.kwargs.items() -%}
+  {{ key }}: {{ value }}
+  {% endfor -%}

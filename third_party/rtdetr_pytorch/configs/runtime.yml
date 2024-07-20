@@ -1,0 +1,6 @@
+sync_bn: False
+find_unused_parameters: False
+use_amp: False
+scaler:
+  type: GradScaler
+  enabled: False

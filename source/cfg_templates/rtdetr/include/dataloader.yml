@@ -1,0 +1,30 @@
+train_dataloader:
+  dataset:
+    return_masks: False
+    transforms:
+      ops:
+      {% for transform in data_cfg.train_data.transforms %}
+      - {% for key, value in transform.items() -%}
+        {{ key }}: {{ value }}
+        {% endfor -%}
+      {% endfor %}
+  shuffle: {{ data_cfg.train_data.shuffle }}
+  batch_size: {{ data_cfg.train_data.batch_size }}
+  num_workers: {{ data_cfg.train_data.num_workers }}
+  drop_last: {{ data_cfg.train_data.drop_last }}
+  collate_fn: default_collate_fn
+
+val_dataloader:
+  dataset:
+    transforms:
+      ops:
+      {% for transform in data_cfg.val_data.transforms %}
+      - {% for key, value in transform.items() -%}
+        {{ key }}: {{ value }}
+        {% endfor -%}
+      {% endfor %}
+  shuffle: {{ data_cfg.val_data.shuffle }}
+  batch_size: {{ data_cfg.val_data.batch_size }}
+  num_workers: {{ data_cfg.val_data.num_workers }}
+  drop_last: {{ data_cfg.val_data.drop_last }}
+  collate_fn: default_collate_fn
