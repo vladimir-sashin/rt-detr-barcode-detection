@@ -35,3 +35,21 @@ pre_commit_install:
 setup_ws:
 	$(MAKE) install_venv $(PYTHON_EXEC)
 	$(MAKE) pre_commit_install
+
+
+# ================== DATA PREPROCESSING ==================
+
+fetch_data:
+	poetry run python -m source.data.fetch.main
+
+prep_data:
+	poetry run python -m source.data.prep.main
+
+run_data_pipe:
+	$(MAKE) fetch_data
+	$(MAKE) prep_data
+
+
+# ================== TRAINING AND EVALUATION ==================
+run_train_eval:
+	poetry run python -m source.train_eval.main
