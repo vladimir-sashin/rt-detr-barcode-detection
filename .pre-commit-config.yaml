@@ -16,11 +16,11 @@ repos:
       types: [ python ]
       additional_dependencies: [ wemake-python-styleguide>=0.19.2 ]
   - repo: https://github.com/jendrikseipp/vulture
-    rev: v2.7
+    rev: v2.14
     hooks:
       - id: vulture
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
         args: ['--maxkb=4096']
@@ -33,30 +33,30 @@ repos:
       - id: trailing-whitespace
       - id: double-quote-string-fixer
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 6.0.0
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 25.1.0
     hooks:
       - id: black
         args: ["--skip-string-normalization", "--line-length=120"]
         exclude: source/train_eval/constants.py
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
+    rev: v1.15.0
     hooks:
       - id: mypy
         additional_dependencies: ["types-PyYAML", "types-requests"]
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.5.1
+    rev: v3.1.0
     hooks:
       - id: add-trailing-comma
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.16
+    rev: 0.7.22
     hooks:
       - id: mdformat
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.0
+    rev: 1.9.1
     hooks:
       - id: nbqa-flake8
         additional_dependencies: [ flake8==6.1.0 ]
