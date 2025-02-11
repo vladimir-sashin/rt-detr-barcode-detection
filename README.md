@@ -57,7 +57,7 @@ ______________________________________________________________________
 1. [Data config](configs/data.yaml) (`configs/data.yaml`) to set how to split the data and whether to version it in ClearML.
 1. [Train and evaluation config](configs/train_eval.yaml) (`configs/train_eval.yaml`) to set everything else: use local dataset or from ClearML, which pretrain to use, hyperparameters, ClearML tracking settings, etc.
 
-### 2.  Run data pipeline
+### 2. Run data pipeline
 
 To download and preprocess barcodes detection dataset
 
@@ -80,7 +80,7 @@ make run_train_eval
 
 That's it, RT DETR goes brrr, and you'll be able to see all the results and your model in ClearML, already trained and exported to ONNX.
 
-### 4. \[Alternatively\] Run end-to-end pipeline
+### 4. [Alternatively] Run end-to-end pipeline
 
 To run everything at once in a single line: fetch data + preprocess data + train and evaluate pretrained RT DETR model.
 
